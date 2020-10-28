@@ -1,5 +1,8 @@
 ﻿using DAProtoBuf;
+using System;
 using System.IO;
+using System.Net;
+using System.Text;
 using UnityEditor;
 using UnityEditor.Experimental;
 using UnityEngine;
@@ -27,13 +30,6 @@ public class DAProtoTool : EditorWindow
 
     private void OnGUI()
     {
-        if (GUILayout.Button("Test"))
-        {
-
-
-        }
-
-
         GUILayout.BeginHorizontal((GUIStyle)"box");
         {
             GUILayout.BeginHorizontal();
@@ -105,11 +101,45 @@ public class DAProtoTool : EditorWindow
 
     private void DecompressDAProto()
     {
-        //资源从github去下载,保存到本地-》 获取路径传入
+       // EditorUtility.DisplayProgressBar("开始下载");
 
+        string zipPath = Path.Combine(Application.dataPath, "../", "/DAProtoTemp");
+        Directory.CreateDirectory(zipPath);
 
-        ZipTool.Decompress(Application.dataPath + @"\Tool\Protoc.zip", buildProtoPath, null, OverWrite);
-        ZipTool.Decompress(Application.dataPath + @"\Tool\GoogleDll.zip", googldDllPath, null, OverWrite);
+        System.Net.WebClient myWebClient = new System.Net.WebClient();
+        var content = myWebClient.DownloadData(@"https://github.com/cofdream/DAProtoBufer/raw/main/GoogleProto/Tool/Protoc.zip");
+        string pZip = zipPath + "/Protoc.zip";
+        using (FileStream fileStream = new FileStream(pZip, System.IO.FileMode.CreateNew))
+        {
+            fileStream.Write(content, 0, content.Length);
+        }
+        try
+        {
+            ZipTool.Decompress(pZip, buildProtoPath, null, OverWrite);
+        }
+        catch (Exception e)
+        {
+            throw e;
+        }
+        File.Delete(pZip);
+
+        content = myWebClient.DownloadData(@"https://github.com/cofdream/DAProtoBufer/raw/main/GoogleProto/Tool/GoogleDll.zip");
+        string gZip = zipPath + "/GoogleDll.zip";
+        using (FileStream fileStream = new FileStream(gZip, System.IO.FileMode.CreateNew))
+        {
+            fileStream.Write(content, 0, content.Length);
+        }
+        try
+        {
+            ZipTool.Decompress(gZip, googldDllPath, null, OverWrite);
+        }
+        catch (Exception e)
+        {
+            throw e;
+        }
+        File.Delete(gZip);
+
+        Directory.Delete(zipPath);
     }
     private bool OverWrite(string path)
     {
