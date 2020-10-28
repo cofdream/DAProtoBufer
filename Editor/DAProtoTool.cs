@@ -15,31 +15,16 @@ public class DAProtoTool : EditorWindow
 
     private string excelTemplateName = "Template";
 
-    private bool isInit = false;
-
-
+    private string buildProtoPath;
+    private string googldDllPath;
+    private void Awake()
+    {
+        buildProtoPath = Path.Combine(Application.dataPath, "../BuildProto/Tool");
+        googldDllPath = Application.dataPath + "/Pulagin/GoogoleProtobuf";
+    }
 
     private void OnGUI()
     {
-        if (isInit == false)
-        {
-            // 检查目录
-            isInit = CheckDAProto();
-        }
-        if (isInit == false)
-        {
-            if (GUILayout.Button("初始化Proto的相关配置文件"))
-            {
-                InitDAProto();
-                isInit = true;
-            }
-            else
-            {
-                return;
-            }
-        }
-
-
         GUILayout.BeginHorizontal((GUIStyle)"box");
         {
             GUILayout.BeginHorizontal();
@@ -103,23 +88,24 @@ public class DAProtoTool : EditorWindow
             GenerateCSDll();
             GenerateProtoData();
         }
+
+        GUILayout.Space(8);
+        if (GUILayout.Button("解压缩Proto的相关配置文件"))
+            DecompressDAProto();
     }
 
-    private static bool CheckDAProto()
+    private void DecompressDAProto()
     {
-        // 检查相关工具文件是否存在
-
+        ZipTool.Decompress(Application.dataPath + @"\Tool\Protoc.zip", buildProtoPath, null, OverWrite);
+        ZipTool.Decompress(Application.dataPath + @"\Tool\GoogleDll.zip", googldDllPath, null, OverWrite);
+    }
+    private bool OverWrite(string path)
+    {
+        Debug.LogWarning($"文件已存在解压缩保存失败,{path}");
         return false;
     }
 
-    private static void InitDAProto()
-    {
-        // 解压缩对应目录下的压缩包
-        // assets文件夹外部去创建Tool目录
-        // google的Dll解压缩
-    }
-
-    private static void GenerateProtoFile()
+    private void GenerateProtoFile()
     {
         try
         {
@@ -138,7 +124,7 @@ public class DAProtoTool : EditorWindow
         }
     }
 
-    private static void GenerateCSFile()
+    private void GenerateCSFile()
     {
         try
         {
@@ -157,7 +143,7 @@ public class DAProtoTool : EditorWindow
         }
     }
 
-    private static void GenerateCSDll()
+    private void GenerateCSDll()
     {
         try
         {
@@ -177,7 +163,7 @@ public class DAProtoTool : EditorWindow
 
     }
 
-    private static void GenerateProtoData()
+    private void GenerateProtoData()
     {
         try
         {
