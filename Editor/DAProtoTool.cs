@@ -1,7 +1,9 @@
 ﻿using DAProtoBuf;
 using System.IO;
 using UnityEditor;
+using UnityEditor.Experimental;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class DAProtoTool : EditorWindow
 {
@@ -25,6 +27,13 @@ public class DAProtoTool : EditorWindow
 
     private void OnGUI()
     {
+        if (GUILayout.Button("Test"))
+        {
+
+
+        }
+
+
         GUILayout.BeginHorizontal((GUIStyle)"box");
         {
             GUILayout.BeginHorizontal();
@@ -96,6 +105,9 @@ public class DAProtoTool : EditorWindow
 
     private void DecompressDAProto()
     {
+        //资源从github去下载,保存到本地-》 获取路径传入
+
+
         ZipTool.Decompress(Application.dataPath + @"\Tool\Protoc.zip", buildProtoPath, null, OverWrite);
         ZipTool.Decompress(Application.dataPath + @"\Tool\GoogleDll.zip", googldDllPath, null, OverWrite);
     }
