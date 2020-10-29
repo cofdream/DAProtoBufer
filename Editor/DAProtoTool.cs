@@ -21,6 +21,13 @@ public class DAProtoTool : EditorWindow
 
     private string excelTemplateName = "Template";
 
+    private void Awake()
+    {
+        // 也许存在编辑器环境生命周期错误问题
+        //Debug.Log(Directory.GetParent(Application.dataPath).FullName);
+        ConfigPath.projectPath = Directory.GetParent(Application.dataPath).FullName;
+    }
+
     private void OnGUI()
     {
         GUILayout.BeginHorizontal((GUIStyle)"box");
@@ -34,7 +41,16 @@ public class DAProtoTool : EditorWindow
 
             if (GUILayout.Button("生成Excel模板文件"))
             {
-                ExcelGenerate.Generate(string.Format(ConfigPath.Excel_Path + @"\{0}.xlsx", excelTemplateName));
+                string excelPath = string.Format(ConfigPath.Excel_Path + @"\{0}.xlsx", excelTemplateName);
+                if (File.Exists(excelPath))
+                {
+                    EditorUtility.DisplayDialog("存在重复的Excel", excelPath, "确认");
+                }
+                else
+                {
+                    ExcelGenerate.Generate(excelPath);
+                }
+
             }
         }
         GUILayout.EndHorizontal();
@@ -87,7 +103,7 @@ public class DAProtoTool : EditorWindow
         }
         GUILayout.EndVertical();
 
-       
+
 
         GUILayout.Space(8);
         if (GUILayout.Button("初始化Proto需要的相关文件"))
