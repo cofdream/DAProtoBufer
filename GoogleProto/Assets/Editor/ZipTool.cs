@@ -1,11 +1,8 @@
-﻿using UnityEngine;
-using UnityEditor;
-using ICSharpCode.SharpZipLib.Zip;
+﻿using ICSharpCode.SharpZipLib.Zip;
 using System.IO;
-using ICSharpCode.SharpZipLib.Checksum;
 using System;
 
-namespace DAProtoBuf
+namespace DAProto
 {
     public static class ZipTool
     {  

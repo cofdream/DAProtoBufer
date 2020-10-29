@@ -1,61 +1,56 @@
 ﻿using System.IO;
 using UnityEngine;
 
-namespace DAProtoBuf
+namespace DAProto
 {
     internal static class ConfigPath
     {
         /// <summary>
-        /// 项目路径
-        /// </summary>
-        public static string projectPath = Directory.GetParent(Application.dataPath).FullName;
-
-        /// <summary>
         /// Excel 存放路径
         /// </summary>
-        public static string Excel_Path = null;
+        internal static string Excel_Path = null;
 
         /// <summary>
         /// Proto 解释文件路径
         /// </summary>
-        public static string Proto_Path = null;
+        internal static string Proto_Path = null;
 
         /// <summary>
         /// 生成的脚本根路径
         /// </summary>
-        public static string Script_Path = null;
+        internal static string Script_Path = null;
 
-        public static string CSharp_path = null;
-        public static string Cpp_Path = null;
-        public static string Go_Path = null;
-        public static string Java_Path = null;
-        public static string Python_Path = null;
+        internal static string CSharp_path = null;
+        internal static string Cpp_Path = null;
+        internal static string Go_Path = null;
+        internal static string Java_Path = null;
+        internal static string Python_Path = null;
 
         /// <summary>
         /// 生成的数据文件路径
         /// </summary>
-        public static string Data_Path = null;
+        internal static string Data_Path = null;
 
         /// <summary>
         /// cs和Goole.Protobuf脚本的dll路径
         /// </summary>
-        public static string ProtoDll_Path = null;
+        internal static string ProtoDll_Path = null;
 
         /// <summary>
         /// 生成proto文件的工具
         /// </summary>
-        public static string ProtoExe_Path = null;
+        internal static string ProtoExe_Path = null;
 
         /// <summary>
         /// Google.Protobuf的cs文件
         /// </summary>
-        public static string GoogleProtoCS_Path = null;
+        internal static string GoogleProtoCS_Path = null;
 
-        public static string GoogleDll_Path = null;
+        internal static string GoogleDll_Path = null;
 
-        public const string CSNamespace = "DAProto";
+        internal const string CSNamespace = "DAProto";
 
-        static ConfigPath()
+        public static void InitConfigPath(string projectPath)
         {
             string path = projectPath + @"\BuildProto";
 
@@ -70,7 +65,6 @@ namespace DAProtoBuf
             Go_Path = Script_Path + @"\go";
             Java_Path = Script_Path + @"\java";
             Python_Path = Script_Path + @"\python";
-
 
             // 数据文件存放路径
             Data_Path = projectPath + @"\Assets\Resources\DataConfig";

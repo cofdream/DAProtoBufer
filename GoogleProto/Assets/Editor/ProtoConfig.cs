@@ -1,5 +1,5 @@
 ﻿
-namespace DAProtoBuf
+namespace DAProto
 {
     static class ProtoConfig
     {

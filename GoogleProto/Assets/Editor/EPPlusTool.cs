@@ -3,7 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 
-namespace DAProtoBuf
+namespace DAProto
 {
     internal class EPPlusTool
     {
@@ -21,7 +21,6 @@ namespace DAProtoBuf
 
         public static void Execute(Action<ExcelWorksheet> callback)
         {
-            
             Load(xlsx, callback);
             //Generate("*.xls", callback);//不支持xls todo 为当前的读取配置表做一个 接口，然后相关代码已接口形式调用
         }

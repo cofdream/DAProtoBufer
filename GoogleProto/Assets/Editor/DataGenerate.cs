@@ -4,10 +4,9 @@ using OfficeOpenXml;
 using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Linq;
 using System.Reflection;
 
-namespace DAProtoBuf
+namespace DAProto
 {
     class DataGenerate
     {
@@ -79,7 +78,6 @@ namespace DAProtoBuf
                 Directory.CreateDirectory(ConfigPath.Data_Path);
             }
         }
-
 
         public static void Generate(ExcelWorksheet worksheet)
         {
