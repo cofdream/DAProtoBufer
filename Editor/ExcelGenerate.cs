@@ -1,7 +1,7 @@
 ﻿using OfficeOpenXml;
 using System.IO;
 
-namespace DAProtoBuf
+namespace DAProto
 {
     public class ExcelGenerate
     {

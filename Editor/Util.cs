@@ -1,5 +1,5 @@
 ﻿
-namespace DAProtoBuf
+namespace DAProto
 {
     internal static class Util
     {
