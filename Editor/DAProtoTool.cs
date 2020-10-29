@@ -6,6 +6,7 @@ using System.Text;
 using UnityEditor;
 using UnityEditor.Experimental;
 using UnityEngine;
+using UnityEngine.Networking;
 using UnityEngine.UI;
 
 public class DAProtoTool : EditorWindow
@@ -19,14 +20,6 @@ public class DAProtoTool : EditorWindow
     // sheet内嵌Message的处理
 
     private string excelTemplateName = "Template";
-
-    private string buildProtoPath;
-    private string googldDllPath;
-    private void Awake()
-    {
-        buildProtoPath = Path.Combine(Application.dataPath, "../BuildProto/Tool");
-        googldDllPath = Application.dataPath + "/Pulagin/GoogoleProtobuf";
-    }
 
     private void OnGUI()
     {
@@ -95,57 +88,72 @@ public class DAProtoTool : EditorWindow
         }
 
         GUILayout.Space(8);
-        if (GUILayout.Button("解压缩Proto的相关配置文件"))
+        if (GUILayout.Button("初始化Proto需要的相关文件"))
             DecompressDAProto();
     }
 
+
+    #region 初始配置文件生成
+    private const string protocURL = "https://github.com/cofdream/DAProtoBufer/raw/main/GoogleProto/Tool/Protoc.zip";
+    private const string googleDllURL = "https://github.com/cofdream/DAProtoBufer/raw/main/GoogleProto/Tool/GoogleDll.zip";
     private void DecompressDAProto()
     {
-       // EditorUtility.DisplayProgressBar("开始下载");
+        string downloadPath = Path.Combine(Application.dataPath, "../", "/DAProtoTemp");
+        Directory.CreateDirectory(downloadPath);
 
-        string zipPath = Path.Combine(Application.dataPath, "../", "/DAProtoTemp");
-        Directory.CreateDirectory(zipPath);
+        EditorUtility.DisplayProgressBar("Donwnload", "下载 Protoc.zip 资源文件中...", 0);
 
-        System.Net.WebClient myWebClient = new System.Net.WebClient();
-        var content = myWebClient.DownloadData(@"https://github.com/cofdream/DAProtoBufer/raw/main/GoogleProto/Tool/Protoc.zip");
-        string pZip = zipPath + "/Protoc.zip";
+        var webClient = new WebClient();
+
+        var content = webClient.DownloadData(protocURL);
+        string pZip = downloadPath + "/Protoc.zip";
         using (FileStream fileStream = new FileStream(pZip, System.IO.FileMode.CreateNew))
         {
             fileStream.Write(content, 0, content.Length);
         }
-        try
-        {
-            ZipTool.Decompress(pZip, buildProtoPath, null, OverWrite);
-        }
-        catch (Exception e)
-        {
-            throw e;
-        }
-        File.Delete(pZip);
 
-        content = myWebClient.DownloadData(@"https://github.com/cofdream/DAProtoBufer/raw/main/GoogleProto/Tool/GoogleDll.zip");
-        string gZip = zipPath + "/GoogleDll.zip";
+
+        EditorUtility.DisplayProgressBar("Donwnload", "下载 GoogleDll.zip 资源文件中...", 0);
+
+        content = webClient.DownloadData(googleDllURL);
+        string gZip = downloadPath + "/GoogleDll.zip";
         using (FileStream fileStream = new FileStream(gZip, System.IO.FileMode.CreateNew))
         {
             fileStream.Write(content, 0, content.Length);
         }
+
+
+        EditorUtility.DisplayProgressBar("Decompress", "解压缩相关配置文件中...", 0);
+
+        string buildProtoPath = Path.Combine(Application.dataPath, "../", "/BuildProto/Tool");
+        string googldDllPath = Application.dataPath + "/Pulagin/GoogoleProtobuf";
+
         try
         {
+            ZipTool.Decompress(pZip, buildProtoPath, null, OverWrite);
             ZipTool.Decompress(gZip, googldDllPath, null, OverWrite);
         }
         catch (Exception e)
         {
             throw e;
         }
+
+        File.Delete(pZip);
         File.Delete(gZip);
 
-        Directory.Delete(zipPath);
+        Directory.Delete(downloadPath);
+
+        EditorUtility.ClearProgressBar();
     }
+
     private bool OverWrite(string path)
     {
-        Debug.LogWarning($"文件已存在解压缩保存失败,{path}");
+        Debug.LogWarning($"文件已存在解压缩配置文件保存失败,{path}");
         return false;
     }
+    #endregion
+
+
 
     private void GenerateProtoFile()
     {
