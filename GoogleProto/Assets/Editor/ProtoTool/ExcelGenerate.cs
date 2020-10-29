@@ -1,9 +1,5 @@
 ﻿using OfficeOpenXml;
-using System.Collections;
-using System.Collections.Generic;
 using System.IO;
-using UnityEngine;
-using UnityEditor;
 
 namespace DAProtoBuf
 {
@@ -15,12 +11,6 @@ namespace DAProtoBuf
         }
         public static void Generate(string excelPath)
         {
-            if (File.Exists(excelPath))
-            {
-                EditorUtility.DisplayDialog("存在重复的Excel", excelPath, "确认");
-                return;
-            }
-
             string excelName = Path.GetFileNameWithoutExtension(excelPath);
 
             using (ExcelPackage excel = new ExcelPackage())
