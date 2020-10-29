@@ -74,18 +74,20 @@ public class DAProtoTool : EditorWindow
             }
             GUILayout.EndHorizontal();
 
+
+            GUILayout.Space(8);
+
+            if (GUILayout.Button("一键生成对应文件"))
+            {
+                GenerateProtoFile();
+                GenerateCSFile();
+                GenerateCSDll();
+                GenerateProtoData();
+            }
         }
         GUILayout.EndVertical();
 
-        GUILayout.Space(8);
-
-        if (GUILayout.Button("一键生成对应文件"))
-        {
-            GenerateProtoFile();
-            GenerateCSFile();
-            GenerateCSDll();
-            GenerateProtoData();
-        }
+       
 
         GUILayout.Space(8);
         if (GUILayout.Button("初始化Proto需要的相关文件"))
