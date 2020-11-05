@@ -89,6 +89,10 @@ namespace DAProto
                                 AssetDatabase.Refresh();
                             }
                         }
+                        else
+                        {
+                            AssetDatabase.Refresh();
+                        }
                     }
 
                     if (GUILayout.Button("4.生成二进制数据文件"))
@@ -100,8 +104,11 @@ namespace DAProto
                             if (EditorUtility.DisplayDialog("二进制文件生成结束", "是否刷新项目资源", "刷新"))
                             {
                                 AssetDatabase.Refresh();
-
                             }
+                        }
+                        else
+                        {
+                            AssetDatabase.Refresh();
                         }
                     }
                 }
@@ -117,7 +124,14 @@ namespace DAProto
                     GenerateCSDll();
                     GenerateProtoData();
 
-                    if (EditorUtility.DisplayDialog("二进制文件生成结束", "是否刷新项目资源", "刷新"))
+                    if (EditorPrefs.GetBool("kAutoRefresh") == false)
+                    {
+                        if (EditorUtility.DisplayDialog("二进制文件生成结束", "是否刷新项目资源", "刷新"))
+                        {
+                            AssetDatabase.Refresh();
+                        }
+                    }
+                    else
                     {
                         AssetDatabase.Refresh();
                     }
