@@ -1,8 +1,20 @@
 ﻿
+using System;
+
 namespace DAProto
 {
     internal static class Util
     {
+        private static Action<string> log = Console.WriteLine;
+        /// <summary>
+        /// 日志打印回调
+        /// </summary>
+        public static Action<string> LogAction { set { log = value; } }
+        internal static void Log(string content)
+        {
+            log(content.ToString());
+        }
+
         internal static string Cmd(string str)
         {
             var process = new System.Diagnostics.Process();

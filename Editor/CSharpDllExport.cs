@@ -17,28 +17,26 @@ namespace DAProto
 
         const string vs_csc_Path = @"D:\Program Files\Visual Studio2019\MSBuild\Current\Bin\Roslyn\csc.exe";
 
-        static string cmd = string.Format(@"""{0}""", vs_csc_Path) + " /out:" + ConfigPath.ProtoDll_Path +
-                          " /doc:" + Path.Combine(ConfigPath.ProtoDll_Path, "../" + ConfigPath.CSNamespace + ".xml") +
-                         " /target:library" +
-                         @" /reference:" + ConfigPath.GoogleDll_Path +
-                         " /recurse:" + ConfigPath.CSharp_path + "/*.cs";
+        static string cmd = string.Format(@"""{0}""", vs_csc_Path) +
+                            " /out:" + ConfigPath.ProtoDll_Path +
+                            " /doc:" + Path.Combine(ConfigPath.ProtoDll_Path, "../" + ConfigPath.CSNamespace + ".xml") +
+                             " /target:library" +
+                            @" /reference:" + ConfigPath.GoogleDll_Path +
+                            " /recurse:" + ConfigPath.CSharp_path + "/*.cs";
 
-        static readonly bool isCsc;
-        static CSharpDllExport()
-        {
-            isCsc = File.Exists(vs_csc_Path);
-            if (isCsc == false)
-            {
-                Debug.LogError("csc 文件不存在,请重新配置csc路径。 " + vs_csc_Path);
-            }
-        }
         public static string Execute()
         {
-            if (isCsc)
+            Directory.CreateDirectory(Path.Combine(ConfigPath.ProtoDll_Path, "../"));
+
+            if (File.Exists(vs_csc_Path))
             {
                 return Util.Cmd(cmd);
             }
-            return null;
+            else
+            {
+                Debug.LogError("csc 文件不存在,请重新配置csc路径。 " + vs_csc_Path);
+                return null;
+            }
         }
     }
 }

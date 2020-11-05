@@ -9,7 +9,8 @@ namespace DAProto
     {
         static string ExcelPath = ConfigPath.Excel_Path;
         const string xlsx = "*.xlsx";
-        static EPPlusTool()
+
+        public static void Execute(Action<ExcelWorksheet> callback)
         {
             ExcelPackage.LicenseContext = LicenseContext.NonCommercial;
 
@@ -17,10 +18,7 @@ namespace DAProto
             {
                 Directory.CreateDirectory(ExcelPath);
             }
-        }
 
-        public static void Execute(Action<ExcelWorksheet> callback)
-        {
             Load(xlsx, callback);
             //Generate("*.xls", callback);//不支持xls todo 为当前的读取配置表做一个 接口，然后相关代码已接口形式调用
         }

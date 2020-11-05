@@ -20,9 +20,10 @@ namespace DAProto
 
         private string excelTemplateName = "Template";
 
-        private void Awake()
+        private void OnEnable()
         {
             ConfigPath.InitConfigPath(Directory.GetParent(Application.dataPath).FullName);
+            Util.LogAction = Debug.Log;
         }
 
         private void OnGUI()
@@ -41,7 +42,8 @@ namespace DAProto
                     string excelPath = string.Format(ConfigPath.Excel_Path + @"\{0}.xlsx", excelTemplateName);
                     if (File.Exists(excelPath))
                     {
-                        EditorUtility.DisplayDialog("存在重复的Excel", excelPath, "确认");
+                        EditorUtility.DisplayDialog("存在同名的Excel", excelPath, "确认");
+                        Debug.Log("存在同名的Excel \n" + excelPath);//让路径可粘贴
                     }
                     else
                     {
@@ -196,7 +198,8 @@ namespace DAProto
             try
             {
                 EditorUtility.DisplayProgressBar("编译CSharp文件为Dll", "Generate CS Dll...", 0);
-                CSharpDllExport.Execute();
+                string log = CSharpDllExport.Execute();
+                Debug.Log(log);
                 EditorUtility.DisplayProgressBar("编译CSharp文件为Dll", "Generate CS Dll...", 1);
                 EditorUtility.ClearProgressBar();
             }
@@ -242,5 +245,5 @@ namespace DAProto
             var window = GetWindow<DAProtoTool>();
             window.Show();
         }
-    } 
+    }
 }
