@@ -1,4 +1,5 @@
-﻿using System.IO;
+﻿using System.Diagnostics;
+using System.IO;
 
 namespace DAProto
 {
@@ -16,17 +17,15 @@ namespace DAProto
 
         const string javaCmdTemplate = @"{0} -I={1} --java_out={2} {3}";
 
-        static ScriptGenerate()
+
+        public static void Execute(ScriptType scriptType)
         {
             string protoPath = ConfigPath.Proto_Path;
             if (Directory.Exists(protoPath) == false)
             {
                 Directory.CreateDirectory(protoPath);
             }
-        }
 
-        public static void Execute(ScriptType scriptType)
-        {
             if ((scriptType & ScriptType.CSharp) != 0)
             {
                 Generate(cSharpCmdTemplate, ConfigPath.CSharp_path);
@@ -65,7 +64,7 @@ namespace DAProto
                 var filePath = files[i];
 
                 string cmd = string.Format(template, ConfigPath.ProtoExe_Path, ConfigPath.Proto_Path, path, filePath);
-                Util.Cmd(cmd);
+                Util.Log(Util.Cmd(cmd));
             }
         }
 

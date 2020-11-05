@@ -72,10 +72,10 @@ namespace DAProto
             // dll生成路径
             ProtoDll_Path = projectPath + @"\Assets\Pulagin\DAProtobuf\" + CSNamespace + ".dll";
             // googledll的路径
-            GoogleDll_Path = projectPath + @"\Assets\Pulagin\DAProtobuf\Google.Protobuf.dll";
+            GoogleDll_Path = projectPath + @"\Assets\Pulagin\GoogoleProtobuf_3.8.0\Google.Protobuf.dll";
 
             // protoc.exe
-            ProtoExe_Path = path + @"\Tool\protoc.exe";
+            ProtoExe_Path = projectPath + @"\Assets\.ProtoTool\protoc-3.8.0-win64\protoc.exe";
         }
     }
 }
