@@ -22,8 +22,9 @@ namespace DAProto
 
         private void OnEnable()
         {
-            ConfigPath.InitConfigPath(Directory.GetParent(Application.dataPath).FullName);
             Util.LogAction = Debug.Log;
+
+            PathConfig();
         }
 
         private void OnGUI()
@@ -80,11 +81,28 @@ namespace DAProto
                     if (GUILayout.Button("3.编译CSharp文件为Dll"))
                     {
                         GenerateCSDll();
+                        if (EditorPrefs.GetBool("kAutoRefresh") == false)
+                        {
+
+                            if (EditorUtility.DisplayDialog("编译CSharp文件为Dll结束", "是否刷新项目资源", "刷新"))
+                            {
+                                AssetDatabase.Refresh();
+                            }
+                        }
                     }
 
                     if (GUILayout.Button("4.生成二进制数据文件"))
                     {
                         GenerateProtoData();
+
+                        if (EditorPrefs.GetBool("kAutoRefresh") == false)
+                        {
+                            if (EditorUtility.DisplayDialog("二进制文件生成结束", "是否刷新项目资源", "刷新"))
+                            {
+                                AssetDatabase.Refresh();
+
+                            }
+                        }
                     }
                 }
                 GUILayout.EndHorizontal();
@@ -98,6 +116,11 @@ namespace DAProto
                     GenerateCSFile();
                     GenerateCSDll();
                     GenerateProtoData();
+
+                    if (EditorUtility.DisplayDialog("二进制文件生成结束", "是否刷新项目资源", "刷新"))
+                    {
+                        AssetDatabase.Refresh();
+                    }
                 }
             }
             GUILayout.EndVertical();
@@ -222,11 +245,6 @@ namespace DAProto
                 EPPlusTool.Execute(DataGenerate.Generate);
                 EditorUtility.DisplayProgressBar("生成二进制数据文件", "Generate bytes data File...", 1);
                 EditorUtility.ClearProgressBar();
-
-                if (EditorUtility.DisplayDialog("二进制文件生成结束", "是否刷新项目资源", "刷新"))
-                {
-                    AssetDatabase.Refresh();
-                }
             }
             catch (System.Exception e)
             {
@@ -236,6 +254,57 @@ namespace DAProto
             {
                 EditorUtility.ClearProgressBar();
             }
+        }
+
+        private void PathConfig()
+        {
+#if PROTO_TEST
+            // 本地测试环境是
+            string projectPath = Path.Combine(Application.dataPath, "../");
+
+            string path = projectPath + @"\BuildProto";
+
+            ConfigPath.Excel_Path = path + @"\Excel";
+
+            ConfigPath.Proto_Path = path + @"\Generate\Proto";
+
+            ConfigPath.Script_Path = path + @"\Generate\Script";
+
+            ConfigPath.CSharp_path = ConfigPath.Script_Path + @"\cs";
+
+            // 数据文件存放路径
+            ConfigPath.Data_Path = projectPath + @"\Assets\Resources\DataConfig";
+
+            // dll生成路径
+            ConfigPath.ProtoDll_Path = projectPath + @"\Assets\Pulagin\DAProtobuf\" + ConfigPath.CSNamespace + ".dll";
+            // googledll的路径
+            ConfigPath.GoogleDll_Path = projectPath + @"\Assets\Pulagin\GoogoleProtobuf_3.8.0\Google.Protobuf.dll";
+
+            // protoc.exe
+            ConfigPath.ProtoExe_Path = projectPath + @"\Assets\.ProtoTool\protoc-3.8.0-win64\protoc.exe";
+#endif
+            string projectPath = Path.Combine(Application.dataPath, "../");
+
+            string path = projectPath + @"\BuildProto";
+
+            ConfigPath.Excel_Path = path + @"\Excel";
+
+            ConfigPath.Proto_Path = path + @"\Generate\Proto";
+
+            ConfigPath.Script_Path = path + @"\Generate\Script";
+
+            ConfigPath.CSharp_path = ConfigPath.Script_Path + @"\cs";
+
+            // 数据文件存放路径
+            ConfigPath.Data_Path = projectPath + @"\Assets\Resources\DataConfig";
+
+            // dll生成路径
+            ConfigPath.ProtoDll_Path = projectPath + @"\Assets\Pulagin\DAProtobuf\" + ConfigPath.CSNamespace + ".dll";
+
+            // googledll的路径
+            ConfigPath.GoogleDll_Path = typeof(Google.Protobuf.MessageExtensions).Assembly.Location;
+            // protoc.exe
+            ConfigPath.ProtoExe_Path = Path.Combine(ConfigPath.GoogleDll_Path, "../", "../", "../", @".ProtoTool\protoc-3.8.0-win64\protoc.exe");
         }
 
 
