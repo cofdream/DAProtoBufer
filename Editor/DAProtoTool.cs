@@ -138,59 +138,7 @@ namespace DAProto
                 }
             }
             GUILayout.EndVertical();
-
-            GUILayout.Space(8);
-            if (GUILayout.Button("初始化Protoc工具"))
-                DecompressDAProtoc();
         }
-
-
-        #region 初始配置文件生成
-        private const string protocURL = "https://github.com/cofdream/DAProtoBufer/raw/main/GoogleProto/Tool/Protoc.zip";
-        private void DecompressDAProtoc()
-        {
-            string downloadPath = Path.Combine(Application.dataPath, "../", "/DAProtoTemp");
-            Directory.CreateDirectory(downloadPath);
-
-            EditorUtility.DisplayProgressBar("Donwnload", "下载 Protoc.zip 资源文件中...", 0);
-
-            var webClient = new WebClient();
-
-            var content = webClient.DownloadData(protocURL);
-            string pZip = downloadPath + "/Protoc.zip";
-            using (FileStream fileStream = new FileStream(pZip, System.IO.FileMode.CreateNew))
-            {
-                fileStream.Write(content, 0, content.Length);
-            }
-
-            EditorUtility.DisplayProgressBar("Decompress", "解压缩相关配置文件中...", 0);
-
-            string buildProtoPath = Path.Combine(Application.dataPath, "../", "/BuildProto/Tool");
-            string googldDllPath = Application.dataPath + "/Pulagin/GoogoleProtobuf";
-
-            try
-            {
-                ZipTool.Decompress(pZip, buildProtoPath, null, OverWrite);
-            }
-            catch (Exception e)
-            {
-                throw e;
-            }
-
-            File.Delete(pZip);
-
-            Directory.Delete(downloadPath);
-
-            EditorUtility.ClearProgressBar();
-        }
-
-        private bool OverWrite(string path)
-        {
-            Debug.LogWarning($"文件已存在解压缩配置文件保存失败,{path}");
-            return false;
-        }
-        #endregion
-
 
         private void GenerateProtoFile()
         {
