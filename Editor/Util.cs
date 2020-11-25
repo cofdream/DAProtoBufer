@@ -32,7 +32,6 @@ namespace DAProto
             string output = process.StandardOutput.ReadToEnd();
 
             process.WaitForExit();
-            // UnityEngine.Debug.Log(output);
             return output;
         }
     }
