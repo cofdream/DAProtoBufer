@@ -238,9 +238,9 @@ namespace DAProto
             ConfigPath.Data_Path = projectPath + @"\Assets\Resources\DataConfig";
 
             // dll生成路径
-            ConfigPath.ProtoDll_Path = projectPath + @"\Assets\Pulagin\DAProtobuf\" + ConfigPath.CSNamespace + ".dll";
+            ConfigPath.ProtoDll_Path = projectPath + @"\Assets\Plugins\DAProtobuf\" + ConfigPath.CSNamespace + ".dll";
             // googledll的路径
-            ConfigPath.GoogleDll_Path = projectPath + @"\Assets\Pulagin\GoogoleProtobuf_3.8.0\Google.Protobuf.dll";
+            ConfigPath.GoogleDll_Path = projectPath + @"\Assets\Plugins\GoogoleProtobuf_3.8.0\Google.Protobuf.dll";
 
             // protoc.exe
             ConfigPath.ProtoExe_Path = projectPath + @"\Assets\.ProtoTool\protoc-3.8.0-win64\protoc.exe";
@@ -261,7 +261,7 @@ namespace DAProto
             ConfigPath.Data_Path = projectPath + @"\Assets\Resources\DataConfig";
 
             // dll生成路径
-            ConfigPath.ProtoDll_Path = projectPath + @"\Assets\Pulagin\DAProtobuf\" + ConfigPath.CSNamespace + ".dll";
+            ConfigPath.ProtoDll_Path = projectPath + @"\Assets\Plugins\DAProtobuf\" + ConfigPath.CSNamespace + ".dll";
 
             // googledll的路径
             ConfigPath.GoogleDll_Path = typeof(Google.Protobuf.MessageExtensions).Assembly.Location;
