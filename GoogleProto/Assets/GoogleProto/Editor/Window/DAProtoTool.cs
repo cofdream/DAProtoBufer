@@ -47,120 +47,115 @@ namespace DAProto
             }
             GUILayout.EndScrollView();
 
+            GUILayout.BeginHorizontal((GUIStyle)"box");
+            {
+                GUILayout.BeginHorizontal();
+                {
+                    GUILayout.Label("excel 文件名");
+                    excelTemplateName = GUILayout.TextField(excelTemplateName, 30);
+                }
+                GUILayout.EndHorizontal();
+
+                if (GUILayout.Button("生成Excel模板文件"))
+                {
+                    string excelPath = string.Format(ConfigPath.Excel_Path + @"\{0}.xlsx", excelTemplateName);
+                    if (File.Exists(excelPath))
+                    {
+                        EditorUtility.DisplayDialog("存在同名的Excel", excelPath, "确认");
+                        Debug.Log("存在同名的Excel \n" + excelPath);//让路径可粘贴
+                    }
+                    else
+                    {
+                        ExcelGenerate.Generate(excelPath);
+                    }
+
+                }
+            }
+            GUILayout.EndHorizontal();
 
 
 
+            GUILayout.BeginVertical((GUIStyle)"box");
+            {
+                GUILayout.BeginHorizontal();
+                {
+                    if (GUILayout.Button("1.生成Proto文件"))
+                    {
+                        GenerateProtoFile();
+                    }
+
+                    if (GUILayout.Button("2.生成CSharp文件"))
+                    {
+                        GenerateCSFile();
+                    }
+                }
+                GUILayout.EndHorizontal();
+
+                GUILayout.Space(2);
+
+                GUILayout.BeginHorizontal();
+                {
+
+                    if (GUILayout.Button("3.编译CSharp文件为Dll"))
+                    {
+                        GenerateCSDll();
+                        if (EditorPrefs.GetBool("kAutoRefresh") == false)
+                        {
+
+                            if (EditorUtility.DisplayDialog("编译CSharp文件为Dll结束", "是否刷新项目资源", "刷新"))
+                            {
+                                AssetDatabase.Refresh();
+                            }
+                        }
+                        else
+                        {
+                            AssetDatabase.Refresh();
+                        }
+                    }
+
+                    if (GUILayout.Button("4.生成二进制数据文件"))
+                    {
+                        GenerateProtoData();
+
+                        if (EditorPrefs.GetBool("kAutoRefresh") == false)
+                        {
+                            if (EditorUtility.DisplayDialog("二进制文件生成结束", "是否刷新项目资源", "刷新"))
+                            {
+                                AssetDatabase.Refresh();
+                            }
+                        }
+                        else
+                        {
+                            AssetDatabase.Refresh();
+                        }
+                    }
+                }
+                GUILayout.EndHorizontal();
 
 
-            //GUILayout.BeginHorizontal((GUIStyle)"box");
-            //{
-            //    GUILayout.BeginHorizontal();
-            //    {
-            //        GUILayout.Label("excel 文件名");
-            //        excelTemplateName = GUILayout.TextField(excelTemplateName, 30);
-            //    }
-            //    GUILayout.EndHorizontal();
+                GUILayout.Space(8);
 
-            //    if (GUILayout.Button("生成Excel模板文件"))
-            //    {
-            //        string excelPath = string.Format(ConfigPath.Excel_Path + @"\{0}.xlsx", excelTemplateName);
-            //        if (File.Exists(excelPath))
-            //        {
-            //            EditorUtility.DisplayDialog("存在同名的Excel", excelPath, "确认");
-            //            Debug.Log("存在同名的Excel \n" + excelPath);//让路径可粘贴
-            //        }
-            //        else
-            //        {
-            //            ExcelGenerate.Generate(excelPath);
-            //        }
+                if (GUILayout.Button("一键生成对应文件"))
+                {
+                    GenerateProtoFile();
+                    GenerateCSFile();
+                    GenerateCSDll();
+                    GenerateProtoData();
 
-            //    }
-            //}
-            //GUILayout.EndHorizontal();
-
-
-
-            //GUILayout.BeginVertical((GUIStyle)"box");
-            //{
-            //    GUILayout.BeginHorizontal();
-            //    {
-            //        if (GUILayout.Button("1.生成Proto文件"))
-            //        {
-            //            GenerateProtoFile();
-            //        }
-
-            //        if (GUILayout.Button("2.生成CSharp文件"))
-            //        {
-            //            GenerateCSFile();
-            //        }
-            //    }
-            //    GUILayout.EndHorizontal();
-
-            //    GUILayout.Space(2);
-
-            //    GUILayout.BeginHorizontal();
-            //    {
-
-            //        if (GUILayout.Button("3.编译CSharp文件为Dll"))
-            //        {
-            //            GenerateCSDll();
-            //            if (EditorPrefs.GetBool("kAutoRefresh") == false)
-            //            {
-
-            //                if (EditorUtility.DisplayDialog("编译CSharp文件为Dll结束", "是否刷新项目资源", "刷新"))
-            //                {
-            //                    AssetDatabase.Refresh();
-            //                }
-            //            }
-            //            else
-            //            {
-            //                AssetDatabase.Refresh();
-            //            }
-            //        }
-
-            //        if (GUILayout.Button("4.生成二进制数据文件"))
-            //        {
-            //            GenerateProtoData();
-
-            //            if (EditorPrefs.GetBool("kAutoRefresh") == false)
-            //            {
-            //                if (EditorUtility.DisplayDialog("二进制文件生成结束", "是否刷新项目资源", "刷新"))
-            //                {
-            //                    AssetDatabase.Refresh();
-            //                }
-            //            }
-            //            else
-            //            {
-            //                AssetDatabase.Refresh();
-            //            }
-            //        }
-            //    }
-            //    GUILayout.EndHorizontal();
-
-
-            //    GUILayout.Space(8);
-
-            //    if (GUILayout.Button("一键生成对应文件"))
-            //    {
-            //        GenerateProtoFile();
-            //        GenerateCSFile();
-            //        GenerateCSDll();
-            //        GenerateProtoData();
-
-            //        if (EditorPrefs.GetBool("kAutoRefresh") == false)
-            //        {
-            //            if (EditorUtility.DisplayDialog("二进制文件生成结束", "是否刷新项目资源", "刷新"))
-            //            {
-            //                AssetDatabase.Refresh();
-            //            }
-            //        }
-            //        else
-            //        {
-            //            AssetDatabase.Refresh();
-            //        }
-            //    }
-            //}
-            //GUILayout.EndVertical();
+                    if (EditorPrefs.GetBool("kAutoRefresh") == false)
+                    {
+                        if (EditorUtility.DisplayDialog("二进制文件生成结束", "是否刷新项目资源", "刷新"))
+                        {
+                            AssetDatabase.Refresh();
+                        }
+                    }
+                    else
+                    {
+                        AssetDatabase.Refresh();
+                    }
+                }
+            }
+            GUILayout.EndVertical();
         }
 
         private void GenerateProtoFile()
