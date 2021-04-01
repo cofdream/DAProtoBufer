@@ -5,12 +5,11 @@ using UnityEngine;
 using UnityEditor;
 using System;
 
+
 namespace DAGoogleProto
 {
     public static class GoogleProtoTool
     {
-
-        private const string ConfigPath = "Assets/GoogleProto/Data/DAGoogleProtoConfigData.asset";
         internal static DAGoogleProtoConfigData Config { get; private set; }
         static GoogleProtoTool()
         {
@@ -18,25 +17,31 @@ namespace DAGoogleProto
         }
         public static void LoadConfig()
         {
+            string ConfigPath;
+            var packageInfo = UnityEditor.PackageManager.PackageInfo.FindForAssembly(typeof(GoogleProtoTool).Assembly);
+
+            if (packageInfo != null)// Package环境
+                ConfigPath = packageInfo.assetPath;
+            else
+                ConfigPath = "Assets/GoogleProto";
+            string assetPath = ConfigPath + "/DAGoogleProtoConfigData.asset";
             // 加载文件
-            if (File.Exists(ConfigPath))
+            if (File.Exists(assetPath))
             {
-                Config = AssetDatabase.LoadAssetAtPath<DAGoogleProtoConfigData>(ConfigPath);
+                Config = AssetDatabase.LoadAssetAtPath<DAGoogleProtoConfigData>(assetPath);
             }
             else
             {
-                if (Directory.Exists(ConfigPath) == false)
-                {
-                    Directory.CreateDirectory(ConfigPath);
-                }
                 Config = ScriptableObject.CreateInstance<DAGoogleProtoConfigData>();
                 InitDefautPath(Config);
-                AssetDatabase.CreateAsset(Config, ConfigPath);
-                AssetDatabase.ImportAsset(ConfigPath);
+                AssetDatabase.CreateAsset(Config, assetPath);
+                EditorUtility.SetDirty(Config);
+                AssetDatabase.ImportAsset(assetPath);
             }
         }
 
-        private static void InitDefautPath(DAGoogleProtoConfigData config)
+
+        internal static void InitDefautPath(DAGoogleProtoConfigData config)
         {
             config.RootPath = Directory.GetParent(Application.dataPath).FullName + "/DAGoogleProto";
             if (Directory.Exists(config.RootPath) == false) Directory.CreateDirectory(config.RootPath);
@@ -47,13 +52,27 @@ namespace DAGoogleProto
             config.ExcelPath = config.RootPath + "/Excel";
             if (Directory.Exists(config.ExcelPath) == false) Directory.CreateDirectory(config.ExcelPath);
 
+            config.GenerateScriptPath = config.RootPath + "/Script";
+            if (Directory.Exists(config.GenerateScriptPath) == false) Directory.CreateDirectory(config.GenerateScriptPath);
 
+            config.GenerateScriptDllPath = Application.dataPath + "/GoogleProto/AutoGenerate/Dll";
+            if (Directory.Exists(config.GenerateScriptDllPath) == false) Directory.CreateDirectory(config.GenerateScriptDllPath);
+
+
+            var packageInfo = UnityEditor.PackageManager.PackageInfo.FindForAssembly(typeof(GoogleProtoTool).Assembly);
+            if (packageInfo != null)// Package环境
+                config.ProtocFilePath = packageInfo.resolvedPath + "/.ProtoTool/protoc-3.8.0-win64/protoc.exe";
+            else
+                config.ProtocFilePath = Application.dataPath + "/GoogleProto/.ProtoTool/protoc-3.8.0-win64/protoc.exe";
         }
         public static void CheckConfigPath()
         {
             if (Directory.Exists(Config.RootPath) == false) Directory.CreateDirectory(Config.RootPath);
             if (Directory.Exists(Config.GenerateProtoPath) == false) Directory.CreateDirectory(Config.GenerateProtoPath);
             if (Directory.Exists(Config.ExcelPath) == false) Directory.CreateDirectory(Config.ExcelPath);
+            if (Directory.Exists(Config.GenerateScriptPath) == false) Directory.CreateDirectory(Config.GenerateScriptPath);
+            if (Directory.Exists(Config.GenerateScriptDllPath) == false) Directory.CreateDirectory(Config.GenerateScriptDllPath);
+            if (File.Exists(Config.ProtocFilePath) == false) Debug.LogError($"Protoc:\" {Config.ProtocFilePath} \"File path not exists!");
         }
 
         public static void LoadAllWorksheet(string excelPath, Action<OfficeOpenXml.ExcelWorksheet> callback)

@@ -4,8 +4,11 @@
     {
         public string RootPath;
         public string GenerateProtoPath;
+        public string GenerateScriptPath;
+        public string GenerateScriptDllPath;
         public string ExcelPath;
 
+        public string ProtocFilePath;
 
         public string enumWorksheet_ = "enum_";
 
