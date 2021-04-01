@@ -12,12 +12,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5c6f743e248bd15458eaedd943ace100, type: 3}
   m_Name: DAGoogleProtoConfigData
   m_EditorClassIdentifier: 
-  RootPath: E:\Git\DAProtoBufer\GoogleProto/DAGoogleProto
-  GenerateProtoPath: E:\Git\DAProtoBufer\GoogleProto/DAGoogleProto/AutoGenerate/Proto
-  GenerateScriptPath: E:\Git\DAProtoBufer\GoogleProto/DAGoogleProto/Script
-  GenerateScriptDllPath: E:/Git/DAProtoBufer/GoogleProto/Assets/GoogleProto/AutoGenerate/Dll
-  ExcelPath: E:\Git\DAProtoBufer\GoogleProto/DAGoogleProto/Excel
-  ProtocFilePath: E:/Git/DAProtoBufer/GoogleProto/Assets/GoogleProto/.ProtoTool/protoc-3.8.0-win64/protoc.exe
+  RootPath: C:\Users\v_cqqcchen\Desktop\TestUnity/DAGoogleProto
+  GenerateProtoPath: C:\Users\v_cqqcchen\Desktop\TestUnity/DAGoogleProto/AutoGenerate/Proto
+  GenerateScriptPath: C:\Users\v_cqqcchen\Desktop\TestUnity/DAGoogleProto/Script
+  GenerateScriptDllPath: C:/Users/v_cqqcchen/Desktop/TestUnity/Assets/GoogleProto/AutoGenerate/Dll
+  ExcelPath: C:\Users\v_cqqcchen\Desktop\TestUnity/DAGoogleProto/Excel
+  ProtocFilePath: E:\Git\DAProtoBufer\GoogleProto\Assets\GoogleProto/.ProtoTool/protoc-3.8.0-win64/protoc.exe
   enumWorksheet_: enum_
   commentaryRow: 1
   TypeRow: 2
@@ -25,4 +25,4 @@ MonoBehaviour:
   DataRow: 4
   Split: 59
   IgnoreWorkSheet: '*'
-  CSNamespace: CSProto
+  CSNamespace: DAGoogleProto

@@ -1,0 +1,2 @@
+E:\Git\DAProtoBufer\DAGoogleProto\DAGoogleProto\obj\Debug\DAGoogleProto.csprojAssemblyReference.cache
+E:\Git\DAProtoBufer\DAGoogleProto\DAGoogleProto\obj\Debug\DAGoogleProto.csproj.CoreCompileInputs.cache

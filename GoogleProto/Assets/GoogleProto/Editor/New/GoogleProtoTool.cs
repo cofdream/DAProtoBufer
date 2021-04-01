@@ -1,4 +1,3 @@
-using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using UnityEngine;
@@ -35,7 +34,7 @@ namespace DAGoogleProto
                 Config = ScriptableObject.CreateInstance<DAGoogleProtoConfigData>();
                 InitDefautPath(Config);
                 AssetDatabase.CreateAsset(Config, assetPath);    
-                AssetDatabase.ImportAsset(assetPath);
+                AssetDatabase.ImportAsset(ConfigPath);
             }
         }
 
