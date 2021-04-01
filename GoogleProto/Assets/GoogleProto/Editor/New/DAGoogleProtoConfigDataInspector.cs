@@ -8,7 +8,7 @@ namespace DAGoogleProto
     {
         void Reset()
         {
-            Debug.Log("Reset");
+            
         }
     } 
 }

@@ -19,6 +19,7 @@ MonoBehaviour:
   ExcelPath: E:\Git\DAProtoBufer\GoogleProto/DAGoogleProto/Excel
   ProtocFilePath: E:/Git/DAProtoBufer/GoogleProto/Assets/GoogleProto/.ProtoTool/protoc-3.8.0-win64/protoc.exe
   enumWorksheet_: enum_
+  commentaryRow: 1
   TypeRow: 2
   NameRow: 3
   DataRow: 4

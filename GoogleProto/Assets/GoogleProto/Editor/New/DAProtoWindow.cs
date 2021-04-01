@@ -19,14 +19,21 @@ namespace DAGoogleProto
         }
         private void OnGUI()
         {
+            if (GUILayout.Button("Load Config"))
+            {
+                GoogleProtoTool.LoadConfig();
+            }
+            if (GUILayout.Button("Init Proto"))
+            {
+                GoogleProtoTool.InitDefautPath(GoogleProtoTool.Config);
+            }
             if (GUILayout.Button("Generate Proto"))
             {
                 GoogleProtoTool.LoadAllWorksheet(GoogleProtoTool.Config.ExcelPath, GenerateProto.Generate);
             }
-
-            if (GUILayout.Button("Generate Proto"))
+            if (GUILayout.Button("Generate Script"))
             {
-                GoogleProtoTool.LoadAllWorksheet(GoogleProtoTool.Config.ExcelPath, GenerateProto.Generate);
+                GenertatScript.Execute(GenertatScript.ScriptType.CSharp);
             }
         }
     }

@@ -34,8 +34,7 @@ namespace DAGoogleProto
             {
                 Config = ScriptableObject.CreateInstance<DAGoogleProtoConfigData>();
                 InitDefautPath(Config);
-                AssetDatabase.CreateAsset(Config, assetPath);
-                EditorUtility.SetDirty(Config);
+                AssetDatabase.CreateAsset(Config, assetPath);    
                 AssetDatabase.ImportAsset(assetPath);
             }
         }
@@ -64,6 +63,9 @@ namespace DAGoogleProto
                 config.ProtocFilePath = packageInfo.resolvedPath + "/.ProtoTool/protoc-3.8.0-win64/protoc.exe";
             else
                 config.ProtocFilePath = Application.dataPath + "/GoogleProto/.ProtoTool/protoc-3.8.0-win64/protoc.exe";
+
+
+            EditorUtility.SetDirty(Config);
         }
         public static void CheckConfigPath()
         {

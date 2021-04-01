@@ -1,4 +1,5 @@
 ﻿using OfficeOpenXml;
+using System;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -80,19 +81,15 @@ message {0}_Map
             }
             else
             {
-                string message = GetMessage(range, 1, endColumn, config.TypeRow, config.NameRow);
-
-                stringBuilder.AppendLine(string.Format(messageTemplate, sheetName, message));
-
-                stringBuilder.Append(string.Format(MapTemplate, sheetName, sheetName));
+                AddMessage(range, 1, endColumn, config.TypeRow, config.NameRow, sheetName, config.commentaryRow, config.Split, stringBuilder);
             }
 
             File.WriteAllText(string.Format(protoTemplate, worksheet.Name), stringBuilder.ToString());
         }
 
-        private static string GetMessage(ExcelRange range, int startColumn, int endColumn, int typeRow, int nameRow)
+        private static void AddMessage(ExcelRange range, int startColumn, int endColumn, int typeRow, int nameRow, string sheetName, int commentaryRow, char split, StringBuilder stringBuilder)
         {
-            string message = string.Empty;
+            string messageFieldInfo = string.Empty;
             int index = 0;
             for (int column = startColumn; column <= endColumn; column++)
             {
@@ -104,19 +101,66 @@ message {0}_Map
                     index++;
                     if (type.EndsWith("]"))
                     {
-                        message += string.Format(FieldArrayTemplate, type.Split('[')[0], name, index.ToString());
+                        messageFieldInfo += string.Format(FieldArrayTemplate, type.Split('[')[0], name, index.ToString());
                     }
                     else
                     {
-                        message += string.Format(FieldTemplate, type, name, index.ToString());
+                        messageFieldInfo += string.Format(FieldTemplate, type, name, index.ToString());
                     }
                 }
                 else
                 {
-                    // 如果检测到是 其他类型 的数据，做另外的处理
+                    int arrayFileCount;
+                    int arrayElementCount;
+                    string[] commentary = range[commentaryRow, column].Text.Split(split);
+                    if (commentary.Length >= 2)
+                    {
+                        if (!int.TryParse(commentary[0], out arrayFileCount))
+                        {
+                            throw new Exception($"表格：{sheetName} ,的类型：{type} 未在注释内填写数据项数量");
+                        }
+                        if (!int.TryParse(commentary[1], out arrayElementCount))
+                        {
+                            throw new Exception($"表格：{sheetName} ,的类型：{type} 未在注释内填写数据集合长度");
+                        }
+                        string arrayType = sheetName + "_" + type + "_Array";
+                        index++;
+                        messageFieldInfo += string.Format(FieldArrayTemplate, arrayType, name, index.ToString());
+                        string arrayMessageFieldInfo = string.Empty;
+                        int arrayIndex = 0;
+                        column++;
+                        for (int i = 0; i < arrayFileCount; i++)
+                        {
+                            type = range[typeRow, column + i].Text;
+                            name = range[nameRow, column + i].Text;
+                            if (GoogleProtoTool.Config.VariableType.Contains(type))
+                            {
+                                arrayIndex++;
+                                if (type.EndsWith("]"))
+                                {
+                                    arrayMessageFieldInfo += string.Format(FieldArrayTemplate, type.Split('[')[0], name, arrayIndex.ToString());
+                                }
+                                else
+                                {
+                                    arrayMessageFieldInfo += string.Format(FieldTemplate, type, name, arrayIndex.ToString());
+                                }
+                            }
+                            else
+                            {
+                                throw new Exception($"表格：{sheetName} ,第 {typeRow} 行 {column + i} 列元素配置错误。");
+                            }
+                        }
+                        column += arrayFileCount * arrayElementCount;
+                        stringBuilder.Append(string.Format(messageTemplate, arrayType, arrayMessageFieldInfo));
+                        continue;
+                    }
+                    throw new Exception($"表格：{sheetName} ,的类型：{type} 未在注释内填写数据项数量");
                 }
             }
-            return message;
+
+            stringBuilder.AppendLine(string.Format(messageTemplate, sheetName, messageFieldInfo));
+
+            stringBuilder.Append(string.Format(MapTemplate, sheetName, sheetName));
         }
 
         private static string GetEnumMessage(ExcelRange range, int startRaw, int endRow)
