@@ -1,0 +1,27 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5c6f743e248bd15458eaedd943ace100, type: 3}
+  m_Name: DAGoogleProtoConfigData
+  m_EditorClassIdentifier: 
+  RootPath: E:\Git\DAProtoBufer\GoogleProto/DAGoogleProto
+  GenerateProtoPath: E:\Git\DAProtoBufer\GoogleProto/DAGoogleProto/AutoGenerate/Proto
+  GenerateScriptPath: E:\Git\DAProtoBufer\GoogleProto/DAGoogleProto/Script
+  GenerateScriptDllPath: E:/Git/DAProtoBufer/GoogleProto/Assets/GoogleProto/AutoGenerate/Dll
+  ExcelPath: E:\Git\DAProtoBufer\GoogleProto/DAGoogleProto/Excel
+  ProtocFilePath: E:/Git/DAProtoBufer/GoogleProto/Assets/GoogleProto/.ProtoTool/protoc-3.8.0-win64/protoc.exe
+  enumWorksheet_: enum_
+  TypeRow: 2
+  NameRow: 3
+  DataRow: 4
+  Split: 59
+  IgnoreWorkSheet: '*'
+  CSNamespace: CSProto
