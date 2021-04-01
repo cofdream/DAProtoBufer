@@ -34,7 +34,7 @@ namespace DAGoogleProto
         public static void GenerateProto(string template, string protocFilePath, string protoPath, string scriptSavePath, string protoFilePath)
         {
             string cmd = string.Format(template, protocFilePath, protoPath, scriptSavePath, protoFilePath);
-            Util.Log(Util.CMDNewThreading(cmd));
+            Util.CMDNewThreading(cmd);
         }
-    } 
+    }
 }

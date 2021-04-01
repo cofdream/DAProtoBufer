@@ -19,18 +19,15 @@ namespace DAGoogleProto
 
 
 
-        private static string cmd_output;
-        internal static string CMDNewThreading(object str)
+        internal static void CMDNewThreading(string str)
         {
             // 新开线程防止锁死
             var newThread = new System.Threading.Thread(new System.Threading.ParameterizedThreadStart(CMD));
             newThread.Start(str);
-
-            return cmd_output;
         }
         private static void CMD(object obj)
         {
-            cmd_output = CMD(obj.ToString());
+            Log(CMD(obj as string));
         }
 
         internal static string CMD(string str)
@@ -48,7 +45,7 @@ namespace DAGoogleProto
             process.StandardInput.AutoFlush = true;
             process.StandardInput.WriteLine("exit");
 
-            string output = process.StandardOutput.ReadToEnd();
+            string output = "cmd:\n" + str + "\n\n" + process.StandardOutput.ReadToEnd();
 
             process.WaitForExit();
 
