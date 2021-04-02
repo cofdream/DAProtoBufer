@@ -1,7 +1,50 @@
-﻿namespace DAGoogleProto
+﻿using System;
+using System.IO;
+using System.Reflection;
+
+namespace DAGoogleProto
 {
-    internal sealed class DAGoogleProtoConfigData : UnityEngine.ScriptableObject
+    public class DAGoogleProtoConfigData
     {
+        #region 
+        public const string Double_ = "double";
+        public const string Float_ = "float";
+        public const string Int32_ = "int32";
+        public const string Int64_ = "int64";
+        public const string UInt32_ = "uint32";
+        public const string UInt64_ = "uint64";
+        public const string SInt32_ = "sint32";
+        public const string SInt64_ = "sint64";
+        public const string Fixed32_ = "fixed32";
+        public const string Fixed64_ = "fixed64";
+        public const string SFixed32_ = "sfixed32";
+        public const string SFixed64_ = "sfixed64";
+        public const string Bool_ = "bool";
+        public const string String_ = "string";
+        public const string Bytes_ = "bytes";
+
+        public const string DoubleArray = "double[]";
+        public const string FloatArray = "float[]";
+        public const string Int32Array = "int32[]";
+        public const string Int64Array = "int64[]";
+        public const string UInt32Array = "uint32[]";
+        public const string UInt64Array = "uint64[]";
+        public const string SInt32Array = "sint32[]";
+        public const string SInt64Array = "sint64[]";
+        public const string Fixed32Array = "fixed32[]";
+        public const string Fixed64Array = "fixed64[]";
+        public const string SFixed32Array = "sfixed32[]";
+        public const string SFixed64Array = "sfixed64[]";
+        public const string BoolArray = "bool[]";
+        public const string StringArray = "string[]";
+        public const string BytesArray = "bytes[]";
+
+        public readonly string[] VariableType = new[] {
+            "double", "float", "int32", "int64", "uint32", "uint64", "sint32", "sint64", "fixed32", "fixed64","sfixed32", "sfixed64", "bool", "string", "bytes",
+            "double[]", "float[]", "int32[]", "int64[]", "uint32[]", "uint64[]", "sint32[]", "sint64[]", "fixed32[]", "fixed64[]","sfixed32[]", "sfixed64[]", "bool[]", "string[]", "bytes[]",
+        };
+        #endregion
+
         public string RootPath;
         public string GenerateProtoPath;
         public string GenerateScriptPath;
@@ -10,73 +53,16 @@
 
         public string ProtocFilePath;
 
-        public string enumWorksheet_ = "enum_";
-
-        public int commentaryRow = 1;//注释在第几行
-        public int TypeRow = 2;//字段类型在第几行
-        public int NameRow = 3;//字段名在第几行
-        public int DataRow = 4;//数据在第几行
-
+        public string enumWorksheet_ = "enum.";
 
         public char Split = ';';
         public string IgnoreWorkSheet = "*";
 
         public string CSNamespace = "DAGoogleProto";
 
-
-        #region 
-        //double
-        //float
-        //int32
-        //int64
-        //uint32
-        //uint64
-        //sint32
-        //sint64
-        //fixed32
-        //fixed64
-        //sfixed32
-        //sfixed64
-        //bool
-        //string
-        //bytes 
-        #endregion
-
-        public const string double_ = "double";
-        public const string float_ = "float";
-        public const string int32_ = "int32";
-        public const string int64_ = "int64";
-        public const string uint32_ = "uint32";
-        public const string uint64_ = "uint64";
-        public const string sint32_ = "sint32";
-        public const string sint64_ = "sint64";
-        public const string fixed32_ = "fixed32";
-        public const string fixed64_ = "fixed64";
-        public const string sfixed32_ = "sfixed32";
-        public const string sfixed64_ = "sfixed64";
-        public const string bool_ = "bool";
-        public const string string_ = "string";
-        public const string bytes_ = "bytes";
-
-        public const string double_s = "double[]";
-        public const string float_s = "float[]";
-        public const string int32_s = "int32[]";
-        public const string int64_s = "int64[]";
-        public const string uint32_s = "uint32[]";
-        public const string uint64_s = "uint64[]";
-        public const string sint32_s = "sint32[]";
-        public const string sint64_s = "sint64[]";
-        public const string fixed32_s = "fixed32[]";
-        public const string fixed64_s = "fixed64[]";
-        public const string sfixed32_s = "sfixed32[]";
-        public const string sfixed64_s = "sfixed64[]";
-        public const string bool_s = "bool[]";
-        public const string string_s = "string[]";
-        public const string bytes_s = "bytes[]";
-
-        public readonly string[] VariableType = new[] {
-            "double", "float", "int32", "int64", "uint32", "uint64", "sint32", "sint64", "fixed32", "fixed64","sfixed32", "sfixed64", "bool", "string", "bytes",
-            "double[]", "float[]", "int32[]", "int64[]", "uint32[]", "uint64[]", "sint32[]", "sint64[]", "fixed32[]", "fixed64[]","sfixed32[]", "sfixed64[]", "bool[]", "string[]", "bytes[]",
-        };
+        public int CommentaryRow = 1;//注释在第几行
+        public int TypeRow = 2;//字段类型在第几行
+        public int NameRow = 3;//字段名在第几行
+        public int DataRow = 4;//数据在第几行
     }
 }

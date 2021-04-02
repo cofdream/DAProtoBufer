@@ -9,7 +9,8 @@ namespace DAProto
 
         const string cSharpCmdTemplate = @"{0} -I={1} --csharp_out={2} {3} --csharp_opt=file_extension=.pb.cs";
 
-        const string cppCmdTemplate = @"{0} -I={1} --cpp_out={2} {3}";
+
+       const string cppCmdTemplate = @"{0} -I={1} --cpp_out={2} {3}";
 
         const string pythonCmdTemplate = @"{0} -I={1} --python_out={2} {3}";
 

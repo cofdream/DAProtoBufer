@@ -10,9 +10,14 @@ namespace DAGoogleProto
     {
         static void Main(string[] args)
         {
-            Util.LogAction = Console.WriteLine;
-            Util.LogErrorAction = Console.WriteLine;
+            var config = new DAGoogleProtoConfigData();
 
+            string path = "E:/Git/DAProtoBufer/GoogleProto/Assets/GoogleProto/DAProtoConfigPath.txt";
+            Util.Serizlization(config, path);
+
+            var config2 = Util.Deserizlization<DAGoogleProtoConfigData>(path);
+
+            Console.WriteLine(1);
         }
     }
 }

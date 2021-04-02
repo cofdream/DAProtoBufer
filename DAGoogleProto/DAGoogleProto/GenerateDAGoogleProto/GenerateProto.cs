@@ -6,7 +6,7 @@ using System.Text;
 
 namespace DAGoogleProto
 {
-    internal static class GenerateProto
+    public static class GenerateProto
     {
         /* Java 头文件
 // [START java_declaration]
@@ -46,7 +46,7 @@ message {0}_Map
 {{{1}
 }}";
 
-        public static void Generate(ExcelWorksheet worksheet)
+        public static void GenerateProtoFiles(ExcelWorksheet worksheet)
         {
             var config = GoogleProtoTool.Config;
             string protoTemplate = config.GenerateProtoPath + @"\{0}.proto";
@@ -81,7 +81,7 @@ message {0}_Map
             }
             else
             {
-                AddMessage(range, 1, endColumn, config.TypeRow, config.NameRow, sheetName, config.commentaryRow, config.Split, stringBuilder);
+                AddMessage(range, 1, endColumn, config.TypeRow, config.NameRow, sheetName, config.CommentaryRow, config.Split, stringBuilder);
             }
 
             File.WriteAllText(string.Format(protoTemplate, worksheet.Name), stringBuilder.ToString());

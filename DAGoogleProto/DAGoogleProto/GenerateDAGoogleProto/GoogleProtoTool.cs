@@ -1,7 +1,5 @@
 using System.Collections.Generic;
 using System.IO;
-using UnityEngine;
-using UnityEditor;
 using System;
 
 
@@ -16,55 +14,55 @@ namespace DAGoogleProto
         }
         public static void LoadConfig()
         {
-            string ConfigPath;
-            var packageInfo = UnityEditor.PackageManager.PackageInfo.FindForAssembly(typeof(GoogleProtoTool).Assembly);
+            //string ConfigPath;
+            //var packageInfo = UnityEditor.PackageManager.PackageInfo.FindForAssembly(typeof(GoogleProtoTool).Assembly);
 
-            if (packageInfo != null)// Package环境
-                ConfigPath = packageInfo.assetPath;
-            else
-                ConfigPath = "Assets/GoogleProto";
-            string assetPath = ConfigPath + "/DAGoogleProtoConfigData.asset";
-            // 加载文件
-            if (File.Exists(assetPath))
-            {
-                Config = AssetDatabase.LoadAssetAtPath<DAGoogleProtoConfigData>(assetPath);
-            }
-            else
-            {
-                Config = ScriptableObject.CreateInstance<DAGoogleProtoConfigData>();
-                InitDefautPath(Config);
-                AssetDatabase.CreateAsset(Config, assetPath);    
-                AssetDatabase.ImportAsset(ConfigPath);
-            }
+            //if (packageInfo != null)// Package环境
+            //    ConfigPath = packageInfo.assetPath;
+            //else
+            //    ConfigPath = "Assets/GoogleProto";
+            //string assetPath = ConfigPath + "/DAGoogleProtoConfigData.asset";
+            //// 加载文件
+            //if (File.Exists(assetPath))
+            //{
+            //    Config = AssetDatabase.LoadAssetAtPath<DAGoogleProtoConfigData>(assetPath);
+            //}
+            //else
+            //{
+            //    Config = ScriptableObject.CreateInstance<DAGoogleProtoConfigData>();
+            //    InitDefautPath(Config);
+            //    AssetDatabase.CreateAsset(Config, assetPath);    
+            //    AssetDatabase.ImportAsset(ConfigPath);
+            //}
         }
 
 
         internal static void InitDefautPath(DAGoogleProtoConfigData config)
         {
-            config.RootPath = Directory.GetParent(Application.dataPath).FullName + "/DAGoogleProto";
-            if (Directory.Exists(config.RootPath) == false) Directory.CreateDirectory(config.RootPath);
+            //config.RootPath = Directory.GetParent(Application.dataPath).FullName + "/DAGoogleProto";
+            //if (Directory.Exists(config.RootPath) == false) Directory.CreateDirectory(config.RootPath);
 
-            config.GenerateProtoPath = config.RootPath + "/AutoGenerate/Proto";
-            if (Directory.Exists(config.GenerateProtoPath) == false) Directory.CreateDirectory(config.GenerateProtoPath);
+            //config.GenerateProtoPath = config.RootPath + "/AutoGenerate/Proto";
+            //if (Directory.Exists(config.GenerateProtoPath) == false) Directory.CreateDirectory(config.GenerateProtoPath);
 
-            config.ExcelPath = config.RootPath + "/Excel";
-            if (Directory.Exists(config.ExcelPath) == false) Directory.CreateDirectory(config.ExcelPath);
+            //config.ExcelPath = config.RootPath + "/Excel";
+            //if (Directory.Exists(config.ExcelPath) == false) Directory.CreateDirectory(config.ExcelPath);
 
-            config.GenerateScriptPath = config.RootPath + "/Script";
-            if (Directory.Exists(config.GenerateScriptPath) == false) Directory.CreateDirectory(config.GenerateScriptPath);
+            //config.GenerateScriptPath = config.RootPath + "/Script";
+            //if (Directory.Exists(config.GenerateScriptPath) == false) Directory.CreateDirectory(config.GenerateScriptPath);
 
-            config.GenerateScriptDllPath = Application.dataPath + "/GoogleProto/AutoGenerate/Dll";
-            if (Directory.Exists(config.GenerateScriptDllPath) == false) Directory.CreateDirectory(config.GenerateScriptDllPath);
-
-
-            var packageInfo = UnityEditor.PackageManager.PackageInfo.FindForAssembly(typeof(GoogleProtoTool).Assembly);
-            if (packageInfo != null)// Package环境
-                config.ProtocFilePath = packageInfo.resolvedPath + "/.ProtoTool/protoc-3.8.0-win64/protoc.exe";
-            else
-                config.ProtocFilePath = Application.dataPath + "/GoogleProto/.ProtoTool/protoc-3.8.0-win64/protoc.exe";
+            //config.GenerateScriptDllPath = Application.dataPath + "/GoogleProto/AutoGenerate/Dll";
+            //if (Directory.Exists(config.GenerateScriptDllPath) == false) Directory.CreateDirectory(config.GenerateScriptDllPath);
 
 
-            EditorUtility.SetDirty(Config);
+            //var packageInfo = UnityEditor.PackageManager.PackageInfo.FindForAssembly(typeof(GoogleProtoTool).Assembly);
+            //if (packageInfo != null)// Package环境
+            //    config.ProtocFilePath = packageInfo.resolvedPath + "/.ProtoTool/protoc-3.8.0-win64/protoc.exe";
+            //else
+            //    config.ProtocFilePath = Application.dataPath + "/GoogleProto/.ProtoTool/protoc-3.8.0-win64/protoc.exe";
+
+
+            //EditorUtility.SetDirty(Config);
         }
         public static void CheckConfigPath()
         {

@@ -2,7 +2,6 @@
 using System.CodeDom.Compiler;
 using System.Collections.Generic;
 using System.IO;
-using UnityEngine;
 
 namespace DAGoogleProto
 {
@@ -30,7 +29,7 @@ namespace DAGoogleProto
             {
                 foreach (CompilerError CompErr in results.Errors)
                 {
-                    Debug.LogError("Line number " + CompErr.Line +
+                    Util.LogError("Line number " + CompErr.Line +
                                 ", Error Number: " + CompErr.ErrorNumber +
                                 ", '" + CompErr.ErrorText + ";" +
                                 Environment.NewLine + Environment.NewLine);
@@ -51,7 +50,7 @@ namespace DAGoogleProto
             {
                 foreach (CompilerError CompErr in results2.Errors)
                 {
-                    Debug.LogError("Line number " + CompErr.Line +
+                    Util.LogError("Line number " + CompErr.Line +
                                 ", Error Number: " + CompErr.ErrorNumber +
                                 ", '" + CompErr.ErrorText + ";" +
                                 Environment.NewLine + Environment.NewLine);

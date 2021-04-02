@@ -1,2 +1,10 @@
 E:\Git\DAProtoBufer\DAGoogleProto\DAGoogleProto\obj\Debug\DAGoogleProto.csprojAssemblyReference.cache
 E:\Git\DAProtoBufer\DAGoogleProto\DAGoogleProto\obj\Debug\DAGoogleProto.csproj.CoreCompileInputs.cache
+E:\Git\DAProtoBufer\DAGoogleProto\DAGoogleProto\bin\Debug\DAGoogleProto.exe.config
+E:\Git\DAProtoBufer\DAGoogleProto\DAGoogleProto\bin\Debug\DAGoogleProto.exe
+E:\Git\DAProtoBufer\DAGoogleProto\DAGoogleProto\bin\Debug\DAGoogleProto.pdb
+E:\Git\DAProtoBufer\DAGoogleProto\DAGoogleProto\bin\Debug\EPPlus.dll
+E:\Git\DAProtoBufer\DAGoogleProto\DAGoogleProto\bin\Debug\EPPlus.xml
+E:\Git\DAProtoBufer\DAGoogleProto\DAGoogleProto\obj\Debug\DAGoogleProto.csproj.CopyComplete
+E:\Git\DAProtoBufer\DAGoogleProto\DAGoogleProto\obj\Debug\DAGoogleProto.exe
+E:\Git\DAProtoBufer\DAGoogleProto\DAGoogleProto\obj\Debug\DAGoogleProto.pdb
