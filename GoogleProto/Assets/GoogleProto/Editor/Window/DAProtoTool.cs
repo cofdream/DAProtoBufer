@@ -222,7 +222,7 @@ namespace DAProto
             try
             {
                 EditorUtility.DisplayProgressBar("生成二进制数据文件", "Generate bytes data File...", 0);
-                EPPlusTool.Execute(DataGenerate.Generate);
+                //EPPlusTool.Execute(DataGenerate.Generate);
                 EditorUtility.DisplayProgressBar("生成二进制数据文件", "Generate bytes data File...", 1);
                 EditorUtility.ClearProgressBar();
             }
@@ -282,7 +282,7 @@ namespace DAProto
             ConfigPath.ProtoDll_Path = projectPath + @"\Assets\Plugins\DAProtobuf\" + ConfigPath.CSNamespace + ".dll";
 
             // googledll的路径
-            ConfigPath.GoogleDll_Path = typeof(Google.Protobuf.MessageExtensions).Assembly.Location;
+            //ConfigPath.GoogleDll_Path = typeof(Google.Protobuf.MessageExtensions).Assembly.Location;
             // protoc.exe
             ConfigPath.ProtoExe_Path = Path.Combine(ConfigPath.GoogleDll_Path, "../", "../", "../", @".ProtoTool\protoc-3.8.0-win64\protoc.exe");
         }

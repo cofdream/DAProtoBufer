@@ -1,0 +1,15 @@
+{
+    "name": "DA.Protobuf.Generate",
+    "references": [
+        "GUID:2a4ff60c96c7b82418286dd7e8fd55fa"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": false,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}
