@@ -33,12 +33,12 @@ namespace DA.Protobuf
             ExcelPath = RootPath + "/Excel";
             if (Directory.Exists(ExcelPath) == false) Directory.CreateDirectory(ExcelPath);
 
-            GenerateScriptPath = RootPath + "/Script";
+            GenerateScriptPath = Application.dataPath + "/Protobuf/AutoGenerate/Script"; 
             if (Directory.Exists(GenerateScriptPath) == false) Directory.CreateDirectory(GenerateScriptPath);
 
             GenerateScriptDllFilePath = Application.dataPath + "/Protobuf/AutoGenerate";
             if (Directory.Exists(GenerateScriptDllFilePath) == false) Directory.CreateDirectory(GenerateScriptDllFilePath);
-
+            
 
             var packageInfo = UnityEditor.PackageManager.PackageInfo.FindForAssembly(typeof(Util).Assembly);
 
@@ -52,6 +52,10 @@ namespace DA.Protobuf
             else
                 ProtobufScriptsPath = Application.dataPath + "/Protobuf/Scripts/Runtime/protobuf3.8.0";
 
+            AssetDatabase.ImportAsset(GenerateScriptPath);
+            AssetDatabase.ImportAsset(GenerateScriptDllFilePath);
+
+
             AssetDatabase.ImportAsset(GetAssetPath());
         }
         public void CheckConfigPath()
@@ -63,6 +67,9 @@ namespace DA.Protobuf
             if (Directory.Exists(GenerateScriptDllFilePath) == false) Directory.CreateDirectory(GenerateScriptDllFilePath);
             if (File.Exists(ProtocFilePath) == false) Util.LogError($"Protoc:\" {ProtocFilePath} \"file path not exists!");
             if (Directory.Exists(ProtobufScriptsPath) == false) Util.LogError($"protobuf script:\" {ProtobufScriptsPath} \"file path not exists!");
+
+            AssetDatabase.ImportAsset(GenerateScriptPath);
+            AssetDatabase.ImportAsset(GenerateScriptDllFilePath);
         }
     }
 }
