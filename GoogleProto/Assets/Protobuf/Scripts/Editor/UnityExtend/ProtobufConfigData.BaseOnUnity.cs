@@ -40,7 +40,7 @@ namespace DA.Protobuf
             if (Directory.Exists(GenerateScriptDllFilePath) == false) Directory.CreateDirectory(GenerateScriptDllFilePath);
 
 
-            var packageInfo = UnityEditor.PackageManager.PackageInfo.FindForAssembly(typeof(ProtobufTool).Assembly);
+            var packageInfo = UnityEditor.PackageManager.PackageInfo.FindForAssembly(typeof(Util).Assembly);
 
             if (packageInfo != null)
                 ProtocFilePath = packageInfo.resolvedPath + "/.protoc-3.8.0-win64/protoc.exe";

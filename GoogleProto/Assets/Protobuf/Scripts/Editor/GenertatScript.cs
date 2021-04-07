@@ -15,7 +15,10 @@ namespace DA.Protobuf
         }
 
         //-I 是--proto_path 的缩写
-
+        // 0 protoc 路径
+        // 1 proto  路径
+        // 2 生成cs 路径
+        // 3 需要生成的proto文件
         public string cSharpCmdTemplate = "{0} -I={1} --csharp_out={2} {3} --csharp_opt=file_extension=.cs";
 
         public string cppCmdTemplate = @"{0} -I={1} --cpp_out={2} {3}";
@@ -28,7 +31,7 @@ namespace DA.Protobuf
 
         public void GenerateScripts(ScriptType scriptType)
         {
-            ProtobufConfigData config = ProtobufTool.Config;
+            ProtobufConfigData config = Util.Config;
             if ((scriptType & ScriptType.CSharp) != 0)
             {
                 GenerateScripts(cSharpCmdTemplate, config.ProtocFilePath, config.GenerateProtoPath, config.GenerateScriptPath);

@@ -48,7 +48,7 @@ message {0}_Map
 
         public void GenerateProtoFiles(ExcelWorksheet worksheet)
         {
-            var config = ProtobufTool.Config;
+            var config = Util.Config;
             string protoTemplate = config.GenerateProtoPath + @"\{0}.proto";
             string sheetName = worksheet.Name;
             var addressBase = worksheet.Dimension;
@@ -87,7 +87,7 @@ message {0}_Map
                 var type = range[typeRow, column].Text;
                 var name = range[nameRow, column].Text;
 
-                if (ProtobufTool.Config.VariableType.Contains(type))
+                if (Util.Config.VariableType.Contains(type))
                 {
                     index++;
                     if (type.EndsWith("]"))
@@ -124,7 +124,7 @@ message {0}_Map
                         {
                             type = range[typeRow, column + i].Text;
                             name = range[nameRow, column + i].Text;
-                            if (ProtobufTool.Config.VariableType.Contains(type))
+                            if (Util.Config.VariableType.Contains(type))
                             {
                                 arrayIndex++;
                                 if (type.EndsWith("]"))

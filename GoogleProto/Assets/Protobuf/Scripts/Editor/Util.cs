@@ -5,8 +5,12 @@ using System.Reflection;
 
 namespace DA.Protobuf
 {
-    public static class Util
+    public static partial class Util
     {
+        public static ProtobufConfigData Config;
+
+
+        #region Log
         public static event Action<string> LogAction = Console.WriteLine;
         public static event Action<string> LogErrorAction = Console.WriteLine;
         internal static void Log(string content)
@@ -17,6 +21,7 @@ namespace DA.Protobuf
         {
             LogErrorAction?.Invoke(content);
         }
+        #endregion
 
         internal static string CMD(string str)
         {
@@ -38,6 +43,123 @@ namespace DA.Protobuf
             process.WaitForExit();
             return output;
         }
+
+        public static void LoadAllWorksheet(string excelPath, Action<OfficeOpenXml.ExcelWorksheet> callback)
+        {
+            if (Directory.Exists(excelPath) == false)
+            {
+                Util.LogError($"路径不存在：{excelPath}");
+                return;
+            }
+
+            OfficeOpenXml.ExcelPackage.LicenseContext = OfficeOpenXml.LicenseContext.NonCommercial;
+
+            string[] excelFilePaths = Directory.GetFiles(excelPath, "*.xlsx", SearchOption.AllDirectories);
+            List<string> excelNames = new List<string>(excelFilePaths.Length);
+
+            foreach (var filePath in excelFilePaths)
+                using (var excel = new OfficeOpenXml.ExcelPackage(new FileInfo(filePath)))
+                {
+                    OfficeOpenXml.ExcelWorksheets worksheets = excel.Workbook.Worksheets;
+                    foreach (var worksheet in worksheets)
+                    {
+                        if (worksheet.Name.StartsWith(Config.IgnoreWorkSheet))
+                        {
+                            Util.Log($"忽略 {worksheet.Name} ,path: {filePath}");
+                            continue;
+                        }
+                        if (worksheet.Dimension == null)
+                        {
+                            Util.Log($"{worksheet.Name} 内容为空，path：{filePath}");
+                            continue;
+                        }
+                        foreach (var excelName in excelNames)
+                            if (excelName.Equals(worksheet.Name))
+                                throw new Exception("存在相同工作簿名称的表: " + worksheet.Name);
+                        excelNames.Add(worksheet.Name);
+
+                        callback(worksheet);
+                    }
+                }
+        }
+
+        internal static Dictionary<Type, Func<string, object>> GetChangeFuncDictionary()
+        {
+            return new Dictionary<Type, Func<string, object>>()
+            {
+                { typeof(int),    ParseInt     },
+                { typeof(long),   ParseLong    },
+                { typeof(uint),   ParseUInt    },
+                { typeof(ulong),  ParseULong   },
+                { typeof(float),  ParseFloat   },
+                { typeof(double), ParseDouble  },
+                { typeof(bool),   ParseBool    },
+                { typeof(string), ParseString  },
+            };
+        }
+        internal static Dictionary<Type, Func<object, string>> GetToStringFuncDictionary()
+        {
+            return new Dictionary<Type, Func<object, string>>()
+            {
+                { typeof(int),    ObjToString   },
+                { typeof(long),   ObjToString   },
+                { typeof(uint),   ObjToString   },
+                { typeof(ulong),  ObjToString   },
+                { typeof(float),  ObjToString   },
+                { typeof(double), ObjToString   },
+                { typeof(bool),   BoolToString  },
+                { typeof(string), ObjToString   },
+            };
+        }
+
+        #region to string
+        private static string ObjToString(object value)
+        {
+            return value == null ? string.Empty : value.ToString();
+        }
+        private static string BoolToString(object value)
+        {
+            return (bool)value ? "0" : "1";
+        }
+        #endregion
+
+        #region Parse to 
+        private static object ParseInt(string value)
+        {
+            return int.Parse(value);
+        }
+        private static object ParseLong(string value)
+        {
+            return long.Parse(value);
+        }
+        private static object ParseUInt(string value)
+        {
+            return uint.Parse(value);
+        }
+        private static object ParseULong(string value)
+        {
+            return ulong.Parse(value);
+        }
+
+        private static object ParseFloat(string value)
+        {
+            return float.Parse(value);
+        }
+        private static object ParseDouble(string value)
+        {
+            return double.Parse(value);
+        }
+
+        private static object ParseBool(string value)
+        {
+            return value == "0" || string.IsNullOrWhiteSpace(value) ? false : true;
+        }
+        private static object ParseString(string value)
+        {
+            return value;
+        }
+        #endregion
+
 
         #region 序列化
         public static void Serizlization<T>(T target, string filePath) where T : new()
@@ -129,83 +251,6 @@ namespace DA.Protobuf
             }
 
             return obj;
-        } 
-        #endregion
-
-        public static Dictionary<Type, Func<string, object>> GetChangeFuncDictionary()
-        {
-            return new Dictionary<Type, Func<string, object>>()
-            {
-                { typeof(int),    ParseInt     },
-                { typeof(long),   ParseLong    },
-                { typeof(uint),   ParseUInt    },
-                { typeof(ulong),  ParseULong   },
-                { typeof(float),  ParseFloat   },
-                { typeof(double), ParseDouble  },
-                { typeof(bool),   ParseBool    },
-                { typeof(string), ParseString  },
-            };
-        }
-        public static Dictionary<Type, Func<object, string>> GetToStringFuncDictionary()
-        {
-            return new Dictionary<Type, Func<object, string>>()
-            {
-                { typeof(int),    ObjToString   },
-                { typeof(long),   ObjToString   },
-                { typeof(uint),   ObjToString   },
-                { typeof(ulong),  ObjToString   },
-                { typeof(float),  ObjToString   },
-                { typeof(double), ObjToString   },
-                { typeof(bool),   BoolToString  },
-                { typeof(string), ObjToString   },
-            };
-        }
-
-        #region to string
-        private static string ObjToString(object value)
-        {
-            return value == null ? string.Empty : value.ToString();
-        }
-        private static string BoolToString(object value)
-        {
-            return (bool)value ? "0" : "1";
-        }
-        #endregion
-
-        #region Parse to 
-        private static object ParseInt(string value)
-        {
-            return int.Parse(value);
-        }
-        private static object ParseLong(string value)
-        {
-            return long.Parse(value);
-        }
-        private static object ParseUInt(string value)
-        {
-            return uint.Parse(value);
-        }
-        private static object ParseULong(string value)
-        {
-            return ulong.Parse(value);
-        }
-
-        private static object ParseFloat(string value)
-        {
-            return float.Parse(value);
-        }
-        private static object ParseDouble(string value)
-        {
-            return double.Parse(value);
-        }
-
-        private static object ParseBool(string value)
-        {
-            return value == "0" || string.IsNullOrWhiteSpace(value) ? false : true;
-        }
-        private static object ParseString(string value)
-        {
-            return value;
         }
         #endregion
     }

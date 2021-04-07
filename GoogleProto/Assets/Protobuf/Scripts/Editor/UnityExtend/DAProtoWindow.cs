@@ -15,21 +15,21 @@ namespace DA.Protobuf
 
         private void OnEnable()
         {
-            ProtobufTool.Config.CheckConfigPath();
+            Util.Config.CheckConfigPath();
         }
         private void OnGUI()
         {
             if (GUILayout.Button("Load Config"))
             {
-                ProtobufTool.LoadConfig();
+                Util.LoadConfig();
             }
             if (GUILayout.Button("Init Proto"))
             {
-                ProtobufTool.Config.InitDefautPath();
+                Util.Config.InitDefautPath();
             }
             if (GUILayout.Button("Generate Proto"))
             {
-                ProtobufTool.LoadAllWorksheet(ProtobufTool.Config.ExcelPath, new GenerateProto().GenerateProtoFiles);
+                Util.LoadAllWorksheet(Util.Config.ExcelPath, new GenerateProto().GenerateProtoFiles);
             }
             if (GUILayout.Button("Generate Script"))
             {
@@ -37,25 +37,25 @@ namespace DA.Protobuf
             }
             if (GUILayout.Button("Generate Dll"))
             {
-                new GenerateDll().CompleDll(ProtobufTool.Config.ProtoDllName);
+                new GenerateDll().CompleDll(Util.Config.ProtoDllName);
 
                 var dataPath = Application.dataPath;
-                if (ProtobufTool.Config.GenerateScriptDllFilePath.StartsWith(dataPath))
+                if (Util.Config.GenerateScriptDllFilePath.StartsWith(dataPath))
                 {
-                    var dllAssetPath = ProtobufTool.Config.GenerateScriptDllFilePath.Substring(dataPath.Length - 6);
-                    AssetDatabase.ImportAsset(dllAssetPath + $"/{ProtobufTool.Config.ProtoDllName}");
+                    var dllAssetPath = Util.Config.GenerateScriptDllFilePath.Substring(dataPath.Length - 6);
+                    AssetDatabase.ImportAsset(dllAssetPath + $"/{Util.Config.ProtoDllName}");
                     Debug.Log(dllAssetPath);
                 }
             }
             if (GUILayout.Button("Generate Data"))
             {
-                ProtobufTool.LoadAllWorksheet(ProtobufTool.Config.ExcelPath, new GenerateProtoData().GenerateData);
+                Util.LoadAllWorksheet(Util.Config.ExcelPath, new GenerateProtoData().GenerateData);
             }
 
 
             if (GUILayout.Button("Test"))
             {
-                ProtobufTool.CheckProtobufAssemblyDefinition();
+                
             }
 
         }

@@ -11,7 +11,7 @@ namespace DA.Protobuf
 
         public void GenerateData(ExcelWorksheet worksheet)
         {
-            var config = ProtobufTool.Config;
+            var config = Util.Config;
             string sheetName = worksheet.Name;
 
             var assembly = Assembly.Load("DA.Generate.Protobuf");
