@@ -7,11 +7,10 @@ namespace DA.Protobuf
 {
     public class GenerateDll
     {
-        public void CompleDll(string dllName)
+        public void CompleDll()
         {
-
             string protobufScriptPath = Util.Config.ProtobufScriptsPath;
-            string outputPath = Util.Config.GenerateScriptDllFilePath + "/" + dllName;
+            string outputPath = Util.Config.GenerateScriptDllFilePath + "/" + Util.Config.ProtoDllName;
             string generateScriptPath = Util.Config.GenerateScriptPath;
 
             CodeDomProvider codeDomProvider = CodeDomProvider.CreateProvider("CSharp");

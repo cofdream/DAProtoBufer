@@ -1,0 +1,27 @@
+// Auto generated 
+syntax = "proto3";
+package packageName;
+
+// [START csharp_declaration]
+option csharp_namespace = "DA.Protobuf"; 
+// [END csharp_declaration]
+
+message Dialog_Config_selfData_Array
+{
+    string name = 1;
+    uint32 age = 2;
+}
+message Dialog_Config
+{
+    uint32 id = 1;
+    string content = 2;
+    uint32 nextId = 3;
+    repeated int32 intArray = 4;
+    repeated string stringArray = 5;
+    repeated Dialog_Config_selfData_Array data = 6;
+}
+
+message Dialog_Config_Map
+{
+    map<int32,Dialog_Config> data = 1;
+}

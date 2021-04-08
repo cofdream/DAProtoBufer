@@ -55,7 +55,7 @@ namespace DA.Protobuf
 
         public string ProtocFilePath;
 
-        public string ProtoDllName = "DA.Generate.Protobuf";
+        public string ProtoDllName = "DA.Generate.Protobuf.dll";
 
         public string enumWorksheet_ = "enum.";
 
@@ -64,7 +64,6 @@ namespace DA.Protobuf
 
         public string CSNamespace = "DA.Protobuf";
 
-        public int CommentaryRow = 1;//注释在第几行
         public int TypeRow = 2;//字段类型在第几行
         public int NameRow = 3;//字段名在第几行
         public int DataRow = 4;//数据在第几行

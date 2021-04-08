@@ -9,7 +9,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1eeeaad7340f1244eadd4cab5aee04bf, type: 3}
+  m_Script: {fileID: 11500000, guid: 756cc2758af7c364eb3413370b5e5307, type: 3}
   m_Name: DA.ProtobufConfigData
   m_EditorClassIdentifier: 
   RootPath: 
@@ -19,7 +19,7 @@ MonoBehaviour:
   ExcelPath: 
   ProtobufScriptsPath: 
   ProtocFilePath: 
-  ProtoDllName: DA.Generate.Protobuf
+  ProtoDllName: DA.Generate.Protobuf.dll
   enumWorksheet_: enum.
   Split: 59
   IgnoreWorkSheet: '#'

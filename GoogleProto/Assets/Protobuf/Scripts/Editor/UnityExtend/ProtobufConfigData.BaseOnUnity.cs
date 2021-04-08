@@ -24,7 +24,7 @@ namespace DA.Protobuf
 
         public void InitDefautPath()
         {
-            RootPath = Directory.GetParent(Application.dataPath).FullName + "/DAGoogleProto";
+            RootPath = Directory.GetParent(Application.dataPath).FullName + "/DAProtoConfig";
             if (Directory.Exists(RootPath) == false) Directory.CreateDirectory(RootPath);
 
             GenerateProtoPath = RootPath + "/AutoGenerate/Proto";
@@ -36,7 +36,7 @@ namespace DA.Protobuf
             GenerateScriptPath = Application.dataPath + "/Protobuf/AutoGenerate/Script"; 
             if (Directory.Exists(GenerateScriptPath) == false) Directory.CreateDirectory(GenerateScriptPath);
 
-            GenerateScriptDllFilePath = Application.dataPath + "/Protobuf/AutoGenerate";
+            GenerateScriptDllFilePath = RootPath + "/AutoGenerate/Dll";
             if (Directory.Exists(GenerateScriptDllFilePath) == false) Directory.CreateDirectory(GenerateScriptDllFilePath);
             
 
@@ -52,9 +52,7 @@ namespace DA.Protobuf
             else
                 ProtobufScriptsPath = Application.dataPath + "/Protobuf/Scripts/Runtime/protobuf3.8.0";
 
-            AssetDatabase.ImportAsset(GenerateScriptPath);
-            AssetDatabase.ImportAsset(GenerateScriptDllFilePath);
-
+            AssetDatabase.ImportAsset(GenerateScriptPath.Replace(Application.dataPath,"Assets"));
 
             AssetDatabase.ImportAsset(GetAssetPath());
         }
@@ -68,8 +66,7 @@ namespace DA.Protobuf
             if (File.Exists(ProtocFilePath) == false) Util.LogError($"Protoc:\" {ProtocFilePath} \"file path not exists!");
             if (Directory.Exists(ProtobufScriptsPath) == false) Util.LogError($"protobuf script:\" {ProtobufScriptsPath} \"file path not exists!");
 
-            AssetDatabase.ImportAsset(GenerateScriptPath);
-            AssetDatabase.ImportAsset(GenerateScriptDllFilePath);
+            AssetDatabase.ImportAsset(GenerateScriptPath.Replace(Application.dataPath, "Assets"));
         }
     }
 }

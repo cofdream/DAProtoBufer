@@ -32,7 +32,7 @@ message {0}
         private const string MapTemplate = @"
 message {0}_Map
 {{
-    map<int32,{1}> Data = 1;
+    map<int32,{1}> data = 1;
 }}";
 
         private const string FieldTemplate = @"
@@ -72,13 +72,13 @@ message {0}_Map
             }
             else
             {
-                AddMessage(range, 1, endColumn, config.TypeRow, config.NameRow, sheetName, config.CommentaryRow, config.Split, stringBuilder);
+                AddMessage(range, 1, endColumn, config.TypeRow, config.NameRow, sheetName, config.Split, stringBuilder);
             }
 
             File.WriteAllText(string.Format(protoTemplate, worksheet.Name), stringBuilder.ToString());
         }
 
-        private void AddMessage(ExcelRange range, int startColumn, int endColumn, int typeRow, int nameRow, string sheetName, int commentaryRow, char split, StringBuilder stringBuilder)
+        private void AddMessage(ExcelRange range, int startColumn, int endColumn, int typeRow, int nameRow, string sheetName, char split, StringBuilder stringBuilder)
         {
             string messageFieldInfo = string.Empty;
             int index = 0;
@@ -101,9 +101,33 @@ message {0}_Map
                 }
                 else
                 {
-                    int arrayFileCount;
-                    int arrayElementCount;
-                    string[] commentary = range[commentaryRow, column].Text.Split(split);
+                    string[] typeSplit = type.Split(split);
+
+                    int arrayElementCount = int.Parse(typeSplit[1]);
+                    int arrayFileCount = int.Parse(typeSplit[2]);
+
+                    if (typeSplit.Length == 5)
+                    {
+                        //Map
+                        int keyIndex = int.Parse(typeSplit[4]);
+                        if (keyIndex > arrayElementCount)
+                        {
+                            Util.LogError($"表格：{sheetName} ,的类型：{type} 配置错误, map的key 超过了元素的总数量");
+
+                        }
+
+                    }
+                    else if (typeSplit.Length == 3)
+                    {
+                        //Array
+
+                    }
+                    else
+                    {
+                        Util.LogError($"表格：{sheetName} ,的类型：{type} 配置错误");
+                    }
+
+                    
                     if (commentary.Length >= 2)
                     {
                         if (!int.TryParse(commentary[0], out arrayFileCount))
@@ -138,14 +162,14 @@ message {0}_Map
                             }
                             else
                             {
-                                throw new Exception($"表格：{sheetName} ,第 {typeRow} 行 {column + i} 列元素配置错误。");
+                                Util.LogError($"表格：{sheetName} ,第 {typeRow} 行 {column + i} 列元素配置错误。");
                             }
                         }
                         column += arrayFileCount * arrayElementCount;
                         stringBuilder.Append(string.Format(messageTemplate, arrayType, arrayMessageFieldInfo));
                         continue;
                     }
-                    throw new Exception($"表格：{sheetName} ,的类型：{type} 未在注释内填写数据项数量");
+                    Util.LogError($"表格：{sheetName} ,的类型：{type} 未在注释内填写数据项数量");
                 }
             }
 
